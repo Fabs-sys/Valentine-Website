@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Heart, Sparkles } from 'lucide-react';
 
 export default function ValentineProposal() {
@@ -59,7 +59,7 @@ export default function ValentineProposal() {
                             animationDuration: `${2 + Math.random() * 2}s`
                         }}
                     >
-                        {['❤️', '💕', '💖', '✨', '🎉', '💝'][Math.floor(Math.random() * 6)]}
+                        {['❤️', '💕', '💖', '✨', '🎉', '💐'][Math.floor(Math.random() * 6)]}
                     </div>
                 ))}
             </div>
@@ -83,7 +83,7 @@ export default function ValentineProposal() {
                         <Sparkles className="text-yellow-400 animate-pulse" size={40} />
                     </div>
                     <p className="text-2xl text-purple-600 font-medium">
-                        Can't wait for our date! 🥰
+                        Freue mich schon auf unser Date! 🥰
                     </p>
                 </div>
             </div>
@@ -96,14 +96,11 @@ export default function ValentineProposal() {
                 {/* Header */}
                 <div className="space-y-4 animate-fade-in">
                     <div className="text-7xl animate-bounce">
-                        💝
+                        💐
                     </div>
                     <h1 className="text-5xl md:text-7xl font-bold text-pink-600 font-serif">
-                        Would you be my Valentine?
+                        Willst du mein Valentinstagsdate sein?
                     </h1>
-                    <p className="text-xl text-purple-500">
-                        Choose wisely... 😊
-                    </p>
                 </div>
 
                 {/* Buttons */}
@@ -118,7 +115,7 @@ export default function ValentineProposal() {
                             fontSize: `${yesButtonSize / 5}px`
                         }}
                     >
-                        Yes! 💕
+                        Ja! 💕
                     </button>
 
                     {/* No Button - The tricky one */}
@@ -138,7 +135,7 @@ export default function ValentineProposal() {
                             cursor: 'pointer'
                         }}
                     >
-                        No
+                        Nein
                     </button>
                 </div>
 
@@ -146,58 +143,11 @@ export default function ValentineProposal() {
                 {noHoverCount > 2 && (
                     <p className="text-lg text-pink-500 animate-fade-in font-medium">
                         {noHoverCount > 5
-                            ? "Bist du dir sicher? :("
-                            : "Der 'nein' Knopf ist etwas scheu..."}
+                            ? "Bist du dir sicher? 🥺"
+                            : "Der 'Nein' Button ist etwas scheu... 😉"}
                     </p>
                 )}
             </div>
-
-            <style jsx>{`
-        @keyframes confetti {
-          0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(100vh) rotate(720deg);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes scale-in {
-          from {
-            transform: scale(0);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-        
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-confetti {
-          animation: confetti linear forwards;
-        }
-        
-        .animate-scale-in {
-          animation: scale-in 0.5s ease-out;
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.6s ease-out;
-        }
-      `}</style>
         </div>
     );
 }
