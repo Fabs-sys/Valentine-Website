@@ -4,6 +4,9 @@ node_modules/
 # Vite
 .vite/
 
+# Builds
+.dist/
+
 # Environment files
 .env
 .env.local
