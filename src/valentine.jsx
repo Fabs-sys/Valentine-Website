@@ -17,15 +17,23 @@ export default function ValentineProposal() {
     ];
 
     const handleNoHover = () => {
-        // Move the button to a random position
-        const randomX = Math.random() * 300 - 150;
-        const randomY = Math.random() * 300 - 150;
+        // Get viewport dimensions
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate safe movement range based on screen size
+        const maxMoveX = Math.min(viewportWidth * 0.3, 200);
+        const maxMoveY = Math.min(viewportHeight * 0.2, 150);
+        
+        // Move the button to a random position within safe bounds
+        const randomX = Math.random() * maxMoveX * 2 - maxMoveX;
+        const randomY = Math.random() * maxMoveY * 2 - maxMoveY;
 
         setNoButtonPosition({ x: randomX, y: randomY });
 
-        // Shrink No button and grow Yes button
+        // Shrink No button and grow Yes button (Yes button can now grow much larger!)
         setNoButtonSize(prev => Math.max(prev - 15, 30));
-        setYesButtonSize(prev => Math.min(prev + 20, 250));
+        setYesButtonSize(prev => Math.min(prev + 25, 450)); // Increased from 250 to 450!
         setNoHoverCount(prev => prev + 1);
     };
 
@@ -68,22 +76,22 @@ export default function ValentineProposal() {
 
     if (accepted) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-pink-300 flex items-center justify-center p-4">
+            <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-pink-300 flex items-center justify-center p-4 overflow-hidden">
                 {showConfetti && <Confetti />}
-                <div className="text-center space-y-6 animate-scale-in">
-                    <div className="text-8xl animate-bounce">
+                <div className="text-center space-y-6 animate-scale-in px-4 w-full max-w-3xl">
+                    <div className="text-7xl md:text-8xl animate-bounce">
                         💖
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-bold text-pink-600 animate-fade-in">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pink-600 animate-fade-in px-2 break-words">
                         {messages[Math.floor(Math.random() * messages.length)]}
                     </h1>
                     <div className="flex justify-center gap-4">
-                        <Sparkles className="text-yellow-400 animate-pulse" size={40} />
-                        <Heart className="text-red-500 animate-pulse" size={40} />
-                        <Sparkles className="text-yellow-400 animate-pulse" size={40} />
+                        <Sparkles className="text-yellow-400 animate-pulse" size={window.innerWidth < 768 ? 32 : 40} />
+                        <Heart className="text-red-500 animate-pulse" size={window.innerWidth < 768 ? 32 : 40} />
+                        <Sparkles className="text-yellow-400 animate-pulse" size={window.innerWidth < 768 ? 32 : 40} />
                     </div>
-                    <p className="text-2xl text-purple-600 font-medium">
-                        Freue mich schon auf unser Date! 🥰
+                    <p className="text-xl md:text-2xl text-purple-600 font-medium px-4">
+                        Freu mich schon auf unser Date! 🥰
                     </p>
                 </div>
             </div>
@@ -91,28 +99,30 @@ export default function ValentineProposal() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 flex items-center justify-center p-4">
-            <div className="text-center space-y-12">
+        <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 flex items-center justify-center p-4 overflow-hidden">
+            <div className="text-center space-y-8 md:space-y-12 w-full max-w-4xl">
                 {/* Header */}
-                <div className="space-y-4 animate-fade-in">
-                    <div className="text-7xl animate-bounce">
+                <div className="space-y-4 animate-fade-in px-4">
+                    <div className="text-6xl md:text-7xl animate-bounce">
                         💐
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-bold text-pink-600 font-serif">
+                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-pink-600 font-serif px-2">
                         Willst du mein Valentinstagsdate sein?
                     </h1>
                 </div>
 
                 {/* Buttons */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 relative min-h-[200px]">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 min-h-[250px] md:min-h-[200px] px-4">
                     {/* Yes Button */}
                     <button
                         onClick={handleYesClick}
-                        className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 z-10"
+                        className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 z-10 flex items-center justify-center shrink-0"
                         style={{
                             width: `${yesButtonSize}px`,
                             height: `${yesButtonSize}px`,
-                            fontSize: `${yesButtonSize / 5}px`
+                            fontSize: `${yesButtonSize / 5}px`,
+                            maxWidth: '80vw',
+                            maxHeight: '80vw'
                         }}
                     >
                         Ja! 💕
@@ -125,13 +135,12 @@ export default function ValentineProposal() {
                         onMouseOver={handleNoHover}
                         onClick={handleNoClick}
                         onTouchStart={handleNoHover}
-                        className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold rounded-full shadow-xl transform transition-all duration-200 absolute"
+                        className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold rounded-full shadow-xl transition-all duration-200 flex items-center justify-center relative shrink-0"
                         style={{
                             width: `${noButtonSize}px`,
                             height: `${noButtonSize}px`,
                             fontSize: `${noButtonSize / 5}px`,
                             transform: `translate(${noButtonPosition.x}px, ${noButtonPosition.y}px)`,
-                            right: '20%',
                             cursor: 'pointer'
                         }}
                     >
