@@ -91,7 +91,7 @@ export default function ValentineProposal() {
                         <Sparkles className="text-yellow-400 animate-pulse" size={window.innerWidth < 768 ? 32 : 40} />
                     </div>
                     <p className="text-xl md:text-2xl text-purple-600 font-medium px-4">
-                        Freu mich schon auf unser Date! 🥰
+                        Ich freue mich schon auf unser Date! 🥰
                     </p>
                 </div>
             </div>
