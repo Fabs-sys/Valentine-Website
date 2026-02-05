@@ -16,6 +16,24 @@ export default function ValentineProposal() {
         "Gute Entscheidung :3 ✨"
     ];
 
+    const hintMessages = [
+        "Der 'Nein' Button ist etwas scheu...",
+        "Huch, er ist weggelaufen!",
+        "Versuch's nochmal... oder sag einfach ja?",
+        "Bist du dir sicher? 🥺",
+        "Der Button mag dich nicht...",
+        "Vielleicht ist 'Ja' die bessere Wahl?",
+        "So schüchtern dieser Button...",
+        "Er versteckt sich vor dir!",
+        "Gib einfach auf und sag ja!",
+        "Ich glaube er will nicht angeklickt werden...",
+        "Fast! Versuch's nochmal!",
+        "Nope! Zu langsam!",
+        "Vielleicht solltest du 'Ja' wählen?"
+    ];
+
+    const [currentHintMessage, setCurrentHintMessage] = React.useState("");
+
     const handleNoHover = () => {
         // Get viewport dimensions
         const viewportWidth = window.innerWidth;
@@ -31,17 +49,21 @@ export default function ValentineProposal() {
 
         setNoButtonPosition({ x: randomX, y: randomY });
 
-        // Shrink No button and grow Yes button (Yes button can now grow much larger!)
+        // Shrink No button and grow Yes button (Yes button can grow HUGE!)
         setNoButtonSize(prev => Math.max(prev - 15, 30));
-        setYesButtonSize(prev => Math.min(prev + 25, 450)); // Increased from 250 to 450!
+        setYesButtonSize(prev => prev + 25); // No maximum! Can grow infinitely!
         setNoHoverCount(prev => prev + 1);
+        
+        // Set random hint message
+        const randomMessage = hintMessages[Math.floor(Math.random() * hintMessages.length)];
+        setCurrentHintMessage(randomMessage);
     };
 
     const handleNoClick = (e) => {
         e.preventDefault();
         // Extra shrink on click attempt
         setNoButtonSize(prev => Math.max(prev - 20, 20));
-        setYesButtonSize(prev => Math.min(prev + 30, 300));
+        setYesButtonSize(prev => prev + 30); // No limit!
         handleNoHover();
     };
 
@@ -120,9 +142,7 @@ export default function ValentineProposal() {
                         style={{
                             width: `${yesButtonSize}px`,
                             height: `${yesButtonSize}px`,
-                            fontSize: `${yesButtonSize / 5}px`,
-                            maxWidth: '80vw',
-                            maxHeight: '80vw'
+                            fontSize: `${yesButtonSize / 5}px`
                         }}
                     >
                         Ja! 💕
@@ -135,7 +155,7 @@ export default function ValentineProposal() {
                         onMouseOver={handleNoHover}
                         onClick={handleNoClick}
                         onTouchStart={handleNoHover}
-                        className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold rounded-full shadow-xl transition-all duration-200 flex items-center justify-center relative shrink-0"
+                        className="bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 text-white font-bold rounded-full shadow-xl transition-all duration-200 flex items-center justify-center relative shrink-0 z-20"
                         style={{
                             width: `${noButtonSize}px`,
                             height: `${noButtonSize}px`,
@@ -150,10 +170,8 @@ export default function ValentineProposal() {
 
                 {/* Hint text */}
                 {noHoverCount > 2 && (
-                    <p className="text-lg text-pink-500 animate-fade-in font-medium">
-                        {noHoverCount > 5
-                            ? "Bist du dir sicher? 🥺"
-                            : "Der 'Nein' Button ist etwas scheu... 😉"}
+                    <p className="text-lg text-pink-500 animate-fade-in font-medium px-4">
+                        {currentHintMessage}
                     </p>
                 )}
             </div>
